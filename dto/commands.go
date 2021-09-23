@@ -2,7 +2,6 @@ package dto
 
 import (
 	"crypto/sha256"
-	"encoding/base64"
 	"strings"
 )
 
@@ -23,12 +22,10 @@ const (
 )
 
 //CalculateSignature - generate signature
-func CalculateSignature(name, salt, token string) string {
+func CalculateSignature(name, salt, token string) [32]byte {
 	var cred strings.Builder
 	cred.WriteString(name)
 	cred.WriteString(salt)
 	cred.WriteString(token)
-	temp := sha256.Sum256([]byte(cred.String()))
-	origin := base64.StdEncoding.EncodeToString(temp[:])
-	return origin
+	return sha256.Sum256([]byte(cred.String()))
 }
