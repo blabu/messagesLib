@@ -1,7 +1,7 @@
 package parser
 
 import (
-	"github.com/blabu/egeonMessages/dto"
+	"github.com/blabu/messagesLib/dto"
 )
 
 // IParser - Основной интерфейс для парсинга сообщений (определяет базовый функционал всего приложения)
