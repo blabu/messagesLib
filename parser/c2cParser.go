@@ -8,7 +8,7 @@ import (
 	"hash/crc32"
 	"strconv"
 
-	"github.com/blabu/egeonMessages/dto"
+	"github.com/blabu/messagesLib/dto"
 )
 
 const (
