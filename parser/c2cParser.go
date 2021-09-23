@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"hash/crc32"
+	"io"
 	"strconv"
 
 	"github.com/blabu/messagesLib/dto"
@@ -85,8 +86,8 @@ func (c2c *C2cParser) FormMessage(msg *dto.Message) ([]byte, error) {
 
 // return position for start header or/and error if not find header or parsing error
 func (c2c *C2cParser) parseHeader(data []byte) (int, error) {
-	if data == nil || len(data) < c2c.GetMinimumDataSize() {
-		return 0, errors.New("Input is empty, nothing to be parsed")
+	if data == nil {
+		return -1, errors.New("Input is empty, nothing to be parsed")
 	}
 	index := bytes.Index(data, []byte(BeginHeader))
 	if index < 0 {
@@ -174,7 +175,19 @@ func (c2c *C2cParser) IsFullReceiveMsg(data []byte) (int, error) {
 	return lastBytes, nil
 }
 
-//GetMinimumDataSize - вернет минимальный валидный пакет в рамках протокола c2c
-func (c2c *C2cParser) GetMinimumDataSize() int {
-	return len(BeginHeader) + headerParamSize*(len(delim)+1) + len(EndHeader)
+//ReadPacketHeader - Читает заголовок и возвращает полученный результат
+func (c2c *C2cParser) ReadPacketHeader(r io.Reader) ([]byte, error) {
+	buf := make([]byte, len(BeginHeader)+headerParamSize*(len(delim)+1)+len(EndHeader))
+	header := make([]byte, 0, len(buf))
+	for {
+		if n, err := r.Read(buf); err == nil {
+			header = append(header, buf[:n]...)
+		} else {
+			return nil, err
+		}
+		if bytes.Index(header, []byte(EndHeader)) >= 0 {
+			break
+		}
+	}
+	return header, nil
 }
