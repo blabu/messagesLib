@@ -61,9 +61,7 @@ type IMessanger interface {
 	AddMessageFrom(ctx context.Context, m *Message) error
 	AddMessageTo(ctx context.Context, m *Message) error
 	GetMessage(ctx context.Context, uid string) (Message, error)
-	GetAllReceivedMessages(ctx context.Context, self string, until time.Time, limit int64) ([]Message, error)
 	GetReceivedMessages(ctx context.Context, self, from string, until time.Time, limit int64) ([]Message, error)
-	GetAllSendedMessages(ctx context.Context, self string, until time.Time, limit int64) ([]Message, error)
 	GetSendedMessages(ctx context.Context, self, to string, until time.Time, limit int64) ([]Message, error)
 	Delete(ctx context.Context, from, to, uid string) error
 }
