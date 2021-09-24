@@ -30,15 +30,6 @@ type Message struct {
 	MessageContent
 }
 
-//Bot is entity with base communication and validation functions
-type Bot struct {
-	ClientDescriptor
-	CreatedBy   string `json:"who" db:"CreatedBy"`
-	Endpoint    string `json:"endpoint" db:"Endpoint"`  // POST request
-	HealthCheck string `json:"health" db:"HealthCheck"` // GET request with return http.StatusOK if all ok. Return any other close connection destroy bot entity
-	ImageURL    string `json:"image" db:"ImageURL"`     // Bot Image url
-}
-
 //ClientDescriptor - предоставляет базовую информацию о пользователе (человек, участник общения) через веб интерфейс
 type ClientDescriptor struct {
 	Name        string    `json:"name" db:"Name"`
@@ -46,4 +37,17 @@ type ClientDescriptor struct {
 	ImageURL    string    `json:"image" db:"ImageURL"`
 	CreatedDate time.Time `json:"created" db:"CreatedDate"`
 	LastDate    time.Time `json:"activity" db:"LastDate"`
+}
+
+//Bot is entity with base communication and validation functions
+type Bot struct {
+	ClientDescriptor
+	CreatedBy   string `json:"who" db:"CreatedBy"`
+	Endpoint    string `json:"endpoint" db:"Endpoint"`  // POST request to send data to bot
+	HealthCheck string `json:"health" db:"HealthCheck"` // GET request to check health bot with return http.StatusOK if all ok. Return any other close connection destroy bot entity
+}
+
+type Channel struct {
+	ClientDescriptor
+	CreatedBy string `json:"who" db:"CreatedBy"`
 }
