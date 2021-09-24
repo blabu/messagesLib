@@ -112,7 +112,7 @@ type IBgBotSaver interface {
 }
 
 type IBgHashHistory interface {
-	AddHashTo(ctx context.Context, from, to, hash string, timestamp int64) error
+	AddHash(ctx context.Context, from, to, hash string, timestamp int64) error
 	GetHash(ctx context.Context, from, to string, maxTimestamp, limit int64) ([]string, error)
 	RemoveHash(ctx context.Context, from, to, hash string) error
 }
