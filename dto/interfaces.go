@@ -28,6 +28,7 @@ type IContacts interface {
 type IMessageHistoryReader interface {
 	GetAllReceivedMessages(ctx context.Context, self, from string, until time.Time, limit int64) ([]MessageMetaInf, error) // Получить отправленные сообщения из списка "Полученные от"
 	GetAllSendedMessages(ctx context.Context, self, to string, until time.Time, limit int64) ([]MessageMetaInf, error)     // Получить отправленные сообщения из списка "Отправленные кем"
+	GetAllMessages(ctx context.Context, self string, until time.Time, limit int64) ([]Message, error)
 	GetByUID(ctx context.Context, uid string) (MessageMetaInf, error)
 }
 
@@ -63,6 +64,7 @@ type IMessanger interface {
 	GetMessage(ctx context.Context, uid string) (Message, error)
 	GetReceivedMessages(ctx context.Context, self, from string, until time.Time, limit int64) ([]Message, error)
 	GetSendedMessages(ctx context.Context, self, to string, until time.Time, limit int64) ([]Message, error)
+	GetAllMessages(ctx context.Context, self string, until time.Time, limit int64) ([]Message, error)
 	Delete(ctx context.Context, from, to, uid string) error
 }
 
