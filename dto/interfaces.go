@@ -96,7 +96,6 @@ type IBgClientSaver interface {
 
 type IBgMsgSaver interface {
 	Get(ctx context.Context, key string) (MessageContent, error)
-	GetMany(ctx context.Context, keys ...string) ([]MessageContent, error)
 	Set(ctx context.Context, key string, val *MessageContent) error
 }
 
