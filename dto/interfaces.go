@@ -26,10 +26,10 @@ type IContacts interface {
 
 //IMessageHistoryReader - Интерфейс читатель мета информации сообщения (куда, кому, во сколько)
 type IMessageHistoryReader interface {
-	GetAllReceivedMessages(ctx context.Context, self, from string, until time.Time, limit int64) ([]MessageMetaInf, error) // Получить отправленные сообщения из списка "Полученные от"
-	GetAllSendedMessages(ctx context.Context, self, to string, until time.Time, limit int64) ([]MessageMetaInf, error)     // Получить отправленные сообщения из списка "Отправленные кем"
+	GetAllReceivedMessages(ctx context.Context, self string, until time.Time, limit int64) ([]MessageMetaInf, error)
+	GetReceivedMessages(ctx context.Context, self, from string, until time.Time, limit int64) ([]MessageMetaInf, error) // Получить отправленные сообщения из списка "Полученные от"
+	GetSendedMessages(ctx context.Context, self, to string, until time.Time, limit int64) ([]MessageMetaInf, error)     // Получить отправленные сообщения из списка "Отправленные кем"
 	GetByUID(ctx context.Context, uid string) (MessageMetaInf, error)
-	GetManyByUIDs(ctx context.Context, uid ...string) ([]MessageMetaInf, error)
 }
 
 //IMessageHistoryWriter - Интерфейс писатель добавляет, редактирует (в случае совпадения ключа) и удаляет информацию о сообщении
@@ -45,9 +45,8 @@ type IMessageHistory interface {
 }
 
 type IMessageSaver interface {
-	SaveMessage(ctx context.Context, msg *MessageContent) error                      // Сохранение содержимого сообщения по ключу в хранилище
-	GetMessage(ctx context.Context, hash string) (MessageContent, error)             // Получить контент сообщения по его ключу (ключ - это комбинация типа контента и хеша содержимого)
-	GetManyMessages(ctx context.Context, hashes ...string) ([]MessageContent, error) // Получить контент по многим сообщениям
+	SaveMessage(ctx context.Context, msg *MessageContent) error          // Сохранение содержимого сообщения по ключу в хранилище
+	GetMessage(ctx context.Context, hash string) (MessageContent, error) // Получить контент сообщения по его ключу (ключ - это комбинация типа контента и хеша содержимого)
 }
 
 /*
@@ -103,7 +102,6 @@ type IBgMsgSaver interface {
 
 type IBgMetaSaver interface {
 	Get(ctx context.Context, key string) (MessageMetaInf, error)
-	GetMany(ctx context.Context, keys ...string) ([]MessageMetaInf, error)
 	Set(ctx context.Context, key string, val *MessageMetaInf) error
 	Del(ctx context.Context, key string) error
 }
