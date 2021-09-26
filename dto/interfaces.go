@@ -57,7 +57,6 @@ IMessanger - интерфейс сохранения и обмена сообщ�
 За это и отвечает интерфейс
 */
 type IMessanger interface {
-	IContacts
 	AddMessageFrom(ctx context.Context, to string, m *Message) error
 	AddMessageTo(ctx context.Context, from string, m *Message) error
 	GetMessage(ctx context.Context, uid string) (Message, error)
