@@ -29,6 +29,7 @@ type IMessageHistoryReader interface {
 	GetAllReceivedMessages(ctx context.Context, self, from string, until time.Time, limit int64) ([]MessageMetaInf, error) // Получить отправленные сообщения из списка "Полученные от"
 	GetAllSendedMessages(ctx context.Context, self, to string, until time.Time, limit int64) ([]MessageMetaInf, error)     // Получить отправленные сообщения из списка "Отправленные кем"
 	GetByUID(ctx context.Context, uid string) (MessageMetaInf, error)
+	GetManyByUIDs(ctx context.Context, uid ...string) ([]MessageMetaInf, error)
 }
 
 //IMessageHistoryWriter - Интерфейс писатель добавляет, редактирует (в случае совпадения ключа) и удаляет информацию о сообщении
@@ -44,8 +45,9 @@ type IMessageHistory interface {
 }
 
 type IMessageSaver interface {
-	SaveMessage(ctx context.Context, msg *MessageContent) error          // Сохранение содержимого сообщения по ключу в хранилище
-	GetMessage(ctx context.Context, hash string) (MessageContent, error) // Получить контент сообщения по его ключу (ключ - это комбинация типа контента и хеша содержимого)
+	SaveMessage(ctx context.Context, msg *MessageContent) error                      // Сохранение содержимого сообщения по ключу в хранилище
+	GetMessage(ctx context.Context, hash string) (MessageContent, error)             // Получить контент сообщения по его ключу (ключ - это комбинация типа контента и хеша содержимого)
+	GetManyMessages(ctx context.Context, hashes ...string) ([]MessageContent, error) // Получить контент по многим сообщениям
 }
 
 /*
@@ -93,13 +95,15 @@ type IBgClientSaver interface {
 	GenerateClient(ctx context.Context, name string) (ClientDescriptor, error)
 }
 
-type IBgTxtSaver interface {
+type IBgMsgSaver interface {
 	Get(ctx context.Context, key string) (MessageContent, error)
+	GetMany(ctx context.Context, keys ...string) ([]MessageContent, error)
 	Set(ctx context.Context, key string, val *MessageContent) error
 }
 
 type IBgMetaSaver interface {
 	Get(ctx context.Context, key string) (MessageMetaInf, error)
+	GetMany(ctx context.Context, keys ...string) ([]MessageMetaInf, error)
 	Set(ctx context.Context, key string, val *MessageMetaInf) error
 	Del(ctx context.Context, key string) error
 }
@@ -117,5 +121,5 @@ type IBgHashHistory interface {
 
 type IChannel interface {
 	AddMessage(ctx context.Context, msg *Message) error
-	GetMessage(ctx context.Context, until time.Time, limit int64) ([]Message, error)
+	GetMessages(ctx context.Context, until time.Time, limit int64) ([]Message, error)
 }
