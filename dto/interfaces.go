@@ -58,8 +58,8 @@ IMessanger - интерфейс сохранения и обмена сообщ�
 */
 type IMessanger interface {
 	IContacts
-	AddMessageFrom(ctx context.Context, m *Message) error
-	AddMessageTo(ctx context.Context, m *Message) error
+	AddMessageFrom(ctx context.Context, to string, m *Message) error
+	AddMessageTo(ctx context.Context, from string, m *Message) error
 	GetMessage(ctx context.Context, uid string) (Message, error)
 	GetReceivedMessages(ctx context.Context, self, from string, until time.Time, limit int64) ([]Message, error)
 	GetSendedMessages(ctx context.Context, self, to string, until time.Time, limit int64) ([]Message, error)
