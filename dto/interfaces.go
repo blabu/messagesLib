@@ -26,7 +26,6 @@ type IContacts interface {
 
 //IMessageHistoryReader - Интерфейс читатель мета информации сообщения (куда, кому, во сколько)
 type IMessageHistoryReader interface {
-	GetAllReceivedMessages(ctx context.Context, self string, until time.Time, limit int64) ([]MessageMetaInf, error)
 	GetReceivedMessages(ctx context.Context, self, from string, until time.Time, limit int64) ([]MessageMetaInf, error) // Получить отправленные сообщения из списка "Полученные от"
 	GetSendedMessages(ctx context.Context, self, to string, until time.Time, limit int64) ([]MessageMetaInf, error)     // Получить отправленные сообщения из списка "Отправленные кем"
 	GetByUID(ctx context.Context, uid string) (MessageMetaInf, error)
@@ -34,9 +33,9 @@ type IMessageHistoryReader interface {
 
 //IMessageHistoryWriter - Интерфейс писатель добавляет, редактирует (в случае совпадения ключа) и удаляет информацию о сообщении
 type IMessageHistoryWriter interface {
-	AddTo(ctx context.Context, msg *MessageMetaInf) error   // Добавляем сообщение в "Полученые от" список
-	AddFrom(ctx context.Context, msg *MessageMetaInf) error // Добавляем сообщение в "Отправленные кем" список
-	Delete(ctx context.Context, from, to, id string) error  // Удалить сообщения из списков от кого и кому
+	AddTo(ctx context.Context, from string, msg *MessageMetaInf) error // Добавляем сообщение в "Полученые от" список
+	AddFrom(ctx context.Context, to string, msg *MessageMetaInf) error // Добавляем сообщение в "Отправленные кем" список
+	Delete(ctx context.Context, from, to, id string) error             // Удалить сообщения из списков от кого и кому
 }
 
 type IMessageHistory interface {
