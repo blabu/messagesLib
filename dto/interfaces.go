@@ -114,6 +114,11 @@ type IBgHashHistory interface {
 	RemoveHash(ctx context.Context, from, to, hash string) error
 }
 
+type IBgChannels interface {
+	Save(ctx context.Context, channel *Channel) error
+	Get(ctx context.Context, name string) (Channel, error)
+}
+
 type IChannel interface {
 	AddMessage(ctx context.Context, msg *Message) error
 	GetMessages(ctx context.Context, until time.Time, limit int64) ([]Message, error)

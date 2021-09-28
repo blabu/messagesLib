@@ -8,6 +8,7 @@ import (
 	"hash/crc32"
 	"io"
 	"strconv"
+	"strings"
 
 	"github.com/blabu/messagesLib/dto"
 )
@@ -66,6 +67,9 @@ func (c2c *C2cParser) FormMessage(msg *dto.Message) ([]byte, error) {
 	if msg == nil {
 		return []byte{}, errors.New("Message nil")
 	}
+	if msg.Proto == 0 {
+		msg.Proto = 1
+	}
 	res := make([]byte, 0, 128+len(msg.Data))
 	res = append(res, []byte(BeginHeader)...)
 	res = append(res, []byte(strconv.FormatUint(uint64(msg.Proto), 16))...)
@@ -76,7 +80,7 @@ func (c2c *C2cParser) FormMessage(msg *dto.Message) ([]byte, error) {
 	res = append(res, ';')
 	res = append(res, []byte(strconv.FormatUint(uint64(msg.Command), 16))...)
 	res = append(res, ';')
-	res = append(res, []byte(msg.ContentType)...)
+	res = append(res, strings.ToUpper(msg.ContentType)[0])
 	res = append(res, ';')
 	res = append(res, []byte(strconv.FormatUint(uint64(len(msg.Data)+4), 16))...) // plus 4 in message length is add crc calculation
 	res = append(res, []byte(EndHeader)...)
@@ -113,6 +117,18 @@ func (c2c *C2cParser) parseHeader(data []byte) (int, error) {
 			return index, errors.New("Icorrect message command, it must be a number")
 		}
 		c2c.head.mType = string(parsed[4]) //тип сообщения
+		switch c2c.head.mType {
+		case "T":
+			c2c.head.mType = "text"
+		case "B":
+			c2c.head.mType = "binary"
+		case "A":
+			c2c.head.mType = "audio"
+		case "V":
+			c2c.head.mType = "video"
+		case "F":
+			c2c.head.mType = "file"
+		}
 		var s uint64
 		if s, err = strconv.ParseUint(string(parsed[5]), 16, 64); err != nil { //размер сообщения
 			return index, errors.New("Icorrect message size, it must be a number")
