@@ -12,6 +12,7 @@ type IClient interface {
 	Read(ctx context.Context, m *Message) error
 	Write(ctx context.Context, m *Message) error
 	ReadNextNotSended(ctx context.Context, m *Message) error
+	IsOnline(ctx context.Context, name string) (bool, error)
 	Close()
 }
 
