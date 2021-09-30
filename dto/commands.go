@@ -19,6 +19,7 @@ const (
 	DataCOMMAND       uint16 = 6
 	SaveDataCOMMAND   uint16 = 7
 	PropertiesCOMMAND uint16 = 8
+	ConnectCOMMAND    uint16 = 9
 )
 
 //CalculateSignature - generate signature
