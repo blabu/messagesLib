@@ -49,5 +49,7 @@ type Bot struct {
 
 type Channel struct {
 	ClientDescriptor
+	More      string `json:"more" db:"More"`
+	About     string `json:"about" db:"About"`
 	CreatedBy string `json:"who" db:"CreatedBy"`
 }
