@@ -43,6 +43,7 @@ type ClientDescriptor struct {
 type Bot struct {
 	ClientDescriptor
 	CreatedBy   string `json:"who" db:"CreatedBy"`
+	About       string `json:"about" db:"About"`
 	Endpoint    string `json:"endpoint" db:"Endpoint"`  // POST request to send data to bot
 	HealthCheck string `json:"health" db:"HealthCheck"` // GET request to check health bot with return http.StatusOK if all ok. Return any other close connection destroy bot entity
 }
