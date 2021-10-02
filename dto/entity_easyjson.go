@@ -511,6 +511,10 @@ func easyjson163c17a9DecodeGithubComBlabuMessagesLibDto4(in *jlexer.Lexer, out *
 			continue
 		}
 		switch key {
+		case "more":
+			out.More = string(in.String())
+		case "about":
+			out.About = string(in.String())
 		case "who":
 			out.CreatedBy = string(in.String())
 		case "name":
@@ -542,8 +546,18 @@ func easyjson163c17a9EncodeGithubComBlabuMessagesLibDto4(out *jwriter.Writer, in
 	first := true
 	_ = first
 	{
-		const prefix string = ",\"who\":"
+		const prefix string = ",\"more\":"
 		out.RawString(prefix[1:])
+		out.String(string(in.More))
+	}
+	{
+		const prefix string = ",\"about\":"
+		out.RawString(prefix)
+		out.String(string(in.About))
+	}
+	{
+		const prefix string = ",\"who\":"
+		out.RawString(prefix)
 		out.String(string(in.CreatedBy))
 	}
 	{
@@ -618,6 +632,8 @@ func easyjson163c17a9DecodeGithubComBlabuMessagesLibDto5(in *jlexer.Lexer, out *
 		switch key {
 		case "who":
 			out.CreatedBy = string(in.String())
+		case "about":
+			out.About = string(in.String())
 		case "endpoint":
 			out.Endpoint = string(in.String())
 		case "health":
@@ -654,6 +670,11 @@ func easyjson163c17a9EncodeGithubComBlabuMessagesLibDto5(out *jwriter.Writer, in
 		const prefix string = ",\"who\":"
 		out.RawString(prefix[1:])
 		out.String(string(in.CreatedBy))
+	}
+	{
+		const prefix string = ",\"about\":"
+		out.RawString(prefix)
+		out.String(string(in.About))
 	}
 	{
 		const prefix string = ",\"endpoint\":"
