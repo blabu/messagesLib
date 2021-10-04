@@ -56,14 +56,10 @@ func CreateEmptyParser(maxSize uint64) IParser {
 	return c2c
 }
 
-// func (c2c *C2cParser) addChecksum(arr []byte) []byte {
-// 	var checksum = make([]byte, 4)
-// 	binary.BigEndian.PutUint32(checksum, crc32.Checksum(arr, crc32.MakeTable(crc32Polynom)))
-// 	return append(arr, checksum...)
-// }
-
 func (c2c *C2cParser) addChecksum(arr []byte) []byte {
-	return append(arr, []byte("1234")...)
+	var checksum = make([]byte, 4)
+	binary.BigEndian.PutUint32(checksum, crc32.Checksum(arr, crc32.MakeTable(crc32Polynom)))
+	return append(arr, checksum...)
 }
 
 //FormMessage - from - Content[0], to - Content[1], data - Content[2]
