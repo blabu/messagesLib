@@ -45,8 +45,8 @@ type IMessageHistory interface {
 }
 
 type IMessageSaver interface {
-	SaveMessage(ctx context.Context, msg *MessageContent) error          // Сохранение содержимого сообщения по ключу в хранилище
-	GetMessage(ctx context.Context, hash string) (MessageContent, error) // Получить контент сообщения по его ключу (ключ - это комбинация типа контента и хеша содержимого)
+	SaveMessage(ctx context.Context, msg *MessageContent) error                            // Сохранение содержимого сообщения по ключу в хранилище
+	GetMessage(ctx context.Context, hash string, withContent bool) (MessageContent, error) // Получить контент сообщения по его ключу (ключ - это комбинация типа контента и хеша содержимого)
 }
 
 /*
