@@ -17,7 +17,7 @@ type IClient interface {
 }
 
 //InitializerIClient - функция инициализатор работы с мессенджером
-type InitializerIClient func(uid, name string) IClient
+type InitializerIClient func(name string) IClient
 
 //IContacts - базовый интерфейс по работе со списком контактов абонента
 type IContacts interface {
