@@ -20,6 +20,7 @@ const (
 	SaveDataCOMMAND   uint16 = 7
 	PropertiesCOMMAND uint16 = 8
 	ConnectCOMMAND    uint16 = 9
+	FirmwareCOMMAND   uint16 = 10
 )
 
 //CalculateSignature - generate signature
