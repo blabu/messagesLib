@@ -40,6 +40,8 @@ func easyjson163c17a9DecodeGithubComBlabuMessagesLibDto(in *jlexer.Lexer, out *M
 			out.UID = string(in.String())
 		case "contentHash":
 			out.ContentHash = string(in.String())
+		case "channel":
+			out.Channel = uint16(in.Uint16())
 		case "proto":
 			out.Proto = uint16(in.Uint16())
 		case "cmd":
@@ -75,6 +77,11 @@ func easyjson163c17a9EncodeGithubComBlabuMessagesLibDto(out *jwriter.Writer, in 
 		const prefix string = ",\"contentHash\":"
 		out.RawString(prefix)
 		out.String(string(in.ContentHash))
+	}
+	{
+		const prefix string = ",\"channel\":"
+		out.RawString(prefix)
+		out.Uint16(uint16(in.Channel))
 	}
 	{
 		const prefix string = ",\"proto\":"
@@ -277,6 +284,8 @@ func easyjson163c17a9DecodeGithubComBlabuMessagesLibDto2(in *jlexer.Lexer, out *
 			out.UID = string(in.String())
 		case "contentHash":
 			out.ContentHash = string(in.String())
+		case "channel":
+			out.Channel = uint16(in.Uint16())
 		case "proto":
 			out.Proto = uint16(in.Uint16())
 		case "cmd":
@@ -337,6 +346,11 @@ func easyjson163c17a9EncodeGithubComBlabuMessagesLibDto2(out *jwriter.Writer, in
 		const prefix string = ",\"contentHash\":"
 		out.RawString(prefix)
 		out.String(string(in.ContentHash))
+	}
+	{
+		const prefix string = ",\"channel\":"
+		out.RawString(prefix)
+		out.Uint16(uint16(in.Channel))
 	}
 	{
 		const prefix string = ",\"proto\":"

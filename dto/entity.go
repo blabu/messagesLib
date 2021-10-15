@@ -15,6 +15,7 @@ type MessageContent struct {
 type MessageMetaInf struct {
 	UID         string `json:"uid" db:"UID"`
 	ContentHash string `json:"contentHash" db:"ContentHash"`
+	Channel     uint16 `json:"channel" db:"Channel"`
 	Proto       uint16 `json:"proto" db:"Proto"`
 	Command     uint16 `json:"cmd" db:"Command"`
 	AddedTime   int64  `json:"addedTime" db:"AddedTime"`
