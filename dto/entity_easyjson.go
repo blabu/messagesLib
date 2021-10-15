@@ -46,6 +46,8 @@ func easyjson163c17a9DecodeGithubComBlabuMessagesLibDto(in *jlexer.Lexer, out *M
 			out.Proto = uint16(in.Uint16())
 		case "cmd":
 			out.Command = uint16(in.Uint16())
+		case "name":
+			out.Name = string(in.String())
 		case "addedTime":
 			out.AddedTime = int64(in.Int64())
 		case "sendedTime":
@@ -92,6 +94,11 @@ func easyjson163c17a9EncodeGithubComBlabuMessagesLibDto(out *jwriter.Writer, in 
 		const prefix string = ",\"cmd\":"
 		out.RawString(prefix)
 		out.Uint16(uint16(in.Command))
+	}
+	{
+		const prefix string = ",\"name\":"
+		out.RawString(prefix)
+		out.String(string(in.Name))
 	}
 	{
 		const prefix string = ",\"addedTime\":"
@@ -290,6 +297,8 @@ func easyjson163c17a9DecodeGithubComBlabuMessagesLibDto2(in *jlexer.Lexer, out *
 			out.Proto = uint16(in.Uint16())
 		case "cmd":
 			out.Command = uint16(in.Uint16())
+		case "name":
+			out.Name = string(in.String())
 		case "addedTime":
 			out.AddedTime = int64(in.Int64())
 		case "sendedTime":
@@ -361,6 +370,11 @@ func easyjson163c17a9EncodeGithubComBlabuMessagesLibDto2(out *jwriter.Writer, in
 		const prefix string = ",\"cmd\":"
 		out.RawString(prefix)
 		out.Uint16(uint16(in.Command))
+	}
+	{
+		const prefix string = ",\"name\":"
+		out.RawString(prefix)
+		out.String(string(in.Name))
 	}
 	{
 		const prefix string = ",\"addedTime\":"

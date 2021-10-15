@@ -18,6 +18,7 @@ type MessageMetaInf struct {
 	Channel     uint16 `json:"channel" db:"Channel"`
 	Proto       uint16 `json:"proto" db:"Proto"`
 	Command     uint16 `json:"cmd" db:"Command"`
+	Name        string `json:"name" db:"Name"`
 	AddedTime   int64  `json:"addedTime" db:"AddedTime"`
 	SendedTime  int64  `json:"sendedTime" db:"SendedTime"`
 	From        string `json:"from" db:"FromName"`
