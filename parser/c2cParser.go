@@ -33,12 +33,12 @@ type header struct {
 	protocolVer uint64 // Версия протокола
 	command     uint64 // Команда
 	mType       string // Тип сообщения (смотри клиента)
-	channel     uint64 // number of channel
 	headerSize  int    // Размер заголовка
 	contentSize int    // Размер данных
 
-	from string
-	to   string
+	channel string // channel name
+	from    string
+	to      string
 }
 
 // C2cParser - Парсер разбирает сообщения по протоколу
@@ -82,7 +82,7 @@ func (c2c *C2cParser) FormMessage(msg *dto.Message) ([]byte, error) {
 	res = append(res, ';')
 	res = append(res, strings.ToUpper(msg.ContentType)[0]) // convert "text" to T, "binary" to "B" device-to-device protocol specific
 	res = append(res, ';')
-	res = append(res, []byte(strconv.FormatUint(uint64(msg.Channel), 16))...) // add number of channel
+	res = append(res, []byte(msg.Channel)...) // add name of channel
 	res = append(res, ';')
 	res = append(res, []byte(strconv.FormatUint(uint64(len(msg.Data)+4), 16))...) // plus 4 in message length is add crc calculation
 	res = append(res, []byte(EndHeader)...)
@@ -132,7 +132,7 @@ func (c2c *C2cParser) parseHeader(data []byte) (int, error) {
 	case "F":
 		c2c.head.mType = "file"
 	}
-	c2c.head.channel, _ = strconv.ParseUint(string(parsed[5]), 16, 64)
+	c2c.head.channel = string(parsed[5])
 	var s uint64
 	if s, err = strconv.ParseUint(string(parsed[6]), 16, 64); err != nil { //размер сообщения
 		return index, errors.New("Icorrect message size, it must be a number")
@@ -168,7 +168,7 @@ func (c2c *C2cParser) ParseMessage(data []byte) (dto.Message, error) {
 	result.MessageMetaInf = dto.MessageMetaInf{
 		Command: uint16(c2c.head.command),
 		Proto:   uint16(c2c.head.protocolVer),
-		Channel: uint16(c2c.head.channel),
+		Channel: c2c.head.channel,
 		From:    c2c.head.from,
 		To:      c2c.head.to,
 	}
