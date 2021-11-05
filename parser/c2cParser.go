@@ -72,19 +72,19 @@ func (c2c *C2cParser) FormMessage(msg *dto.Message) ([]byte, error) {
 	}
 	res := make([]byte, 0, 128+len(msg.Data))
 	res = append(res, []byte(BeginHeader)...)
-	res = append(res, []byte(strconv.FormatUint(uint64(msg.Proto), 16))...)
+	res = append(res, []byte(strings.ToUpper(strconv.FormatUint(uint64(msg.Proto), 16)))...)
 	res = append(res, ';')
 	res = append(res, msg.From...)
 	res = append(res, ';')
 	res = append(res, msg.To...)
 	res = append(res, ';')
-	res = append(res, []byte(strconv.FormatUint(uint64(msg.Command), 16))...)
+	res = append(res, []byte(strings.ToUpper(strconv.FormatUint(uint64(msg.Command), 16)))...)
 	res = append(res, ';')
 	res = append(res, strings.ToUpper(msg.ContentType)[0]) // convert "text" to T, "binary" to "B" device-to-device protocol specific
 	res = append(res, ';')
 	res = append(res, []byte(msg.Channel)...) // add name of channel
 	res = append(res, ';')
-	res = append(res, []byte(strconv.FormatUint(uint64(len(msg.Data)+4), 16))...) // plus 4 in message length is add crc calculation
+	res = append(res, []byte(strings.ToUpper(strconv.FormatUint(uint64(len(msg.Data)+4), 16)))...) // plus 4 in message length is add crc calculation
 	res = append(res, []byte(EndHeader)...)
 	res = append(res, msg.Data...)
 	return c2c.addChecksum(res), nil
