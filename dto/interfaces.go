@@ -83,6 +83,12 @@ type ModemStateReader interface {
 	GetModemState() ModemState
 }
 
+//ModemClient - base client interface
+type ModemClient interface {
+	ReadWriteCloser
+	ModemStateReader
+}
+
 // Salt - is a random string that must be a uniq in system for all time for one client name in descriptor
 type Salt string
 
