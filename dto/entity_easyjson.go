@@ -38,8 +38,8 @@ func easyjson163c17a9DecodeGithubComBlabuMessagesLibDto(in *jlexer.Lexer, out *M
 		switch key {
 		case "name":
 			out.Name = string(in.String())
-		case "lastActivity":
-			out.LastActivity = int64(in.Int64())
+		case "lastPing":
+			out.LastPing = int64(in.Int64())
 		case "voltage":
 			out.Voltage = uint16(in.Uint16())
 		case "signal":
@@ -64,9 +64,9 @@ func easyjson163c17a9EncodeGithubComBlabuMessagesLibDto(out *jwriter.Writer, in 
 		out.String(string(in.Name))
 	}
 	{
-		const prefix string = ",\"lastActivity\":"
+		const prefix string = ",\"lastPing\":"
 		out.RawString(prefix)
-		out.Int64(int64(in.LastActivity))
+		out.Int64(int64(in.LastPing))
 	}
 	{
 		const prefix string = ",\"voltage\":"
