@@ -78,6 +78,11 @@ type ReadWriteCloser interface {
 	io.Closer
 }
 
+//ModemStateReader - get current modem state
+type ModemStateReader interface {
+	GetModemState() ModemState
+}
+
 // Salt - is a random string that must be a uniq in system for all time for one client name in descriptor
 type Salt string
 
