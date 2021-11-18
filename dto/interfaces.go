@@ -68,9 +68,8 @@ type IMessanger interface {
 
 //ReadWriteCloser - создает интерфейс работы с модемом через tcp или tls соединение
 type ReadWriteCloser interface {
-	// Write - Передаем данные полученные из сети бизнес логике
+	// Write - Передаем данные полученные из сети бизнес логике. Возвращает ответ, который
 	Write(ctx context.Context, msg *Message) error
-
 	//Read - читаем ответ бизнес логики return io.EOF if client never answer
 	Read(ctx context.Context, msg *Message) error
 
