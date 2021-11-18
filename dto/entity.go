@@ -57,3 +57,11 @@ type Channel struct {
 	About     string `json:"about" db:"About"`
 	CreatedBy string `json:"who" db:"CreatedBy"`
 }
+
+//ModemState - текущее состояние модема, передается при пинге устройства
+type ModemState struct {
+	Name     string `json:"name"`
+	LastPing int64  `json:"lastPing"`
+	Voltage  uint16 `json:"voltage"`
+	Signal   uint8  `json:"signal"`
+}

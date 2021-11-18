@@ -77,6 +77,11 @@ type ReadWriteCloser interface {
 	io.Closer
 }
 
+//IModemStateSaver - Интерфейс для сохранения состояния модема
+type IModemStateSaver interface {
+	SaveModemState(ctx context.Context, mc *ModemState) error
+}
+
 // Salt - is a random string that must be a uniq in system for all time for one client name in descriptor
 type Salt string
 
