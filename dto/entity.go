@@ -13,6 +13,7 @@ type MessageContent struct {
 
 //MessageMetaInf - история сообщений между пользователями. Хранит мета информацию от кого куда во сколько
 type MessageMetaInf struct {
+	ID          uint8  `json:"-" db:"-"`
 	UID         string `json:"uid" db:"UID"`
 	ContentHash string `json:"contentHash" db:"ContentHash"`
 	Proto       uint16 `json:"proto" db:"Proto"`

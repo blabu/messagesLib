@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	headerParamSize       = 7
+	headerParamSize       = 8
 	startSymb        byte = '$'
 	versionAttribute byte = 'V'
 	crc32Polynom          = 0x04C11DB7
@@ -35,6 +35,7 @@ type header struct {
 	mType       string // Тип сообщения (смотри клиента)
 	headerSize  int    // Размер заголовка
 	contentSize int    // Размер данных
+	id          uint8  // id сообщения
 
 	channel string // channel name
 	from    string
@@ -83,6 +84,8 @@ func (c2c *C2cParser) FormMessage(msg *dto.Message) ([]byte, error) {
 	res = append(res, strings.ToUpper(msg.ContentType)[0]) // convert "text" to T, "binary" to "B" device-to-device protocol specific
 	res = append(res, ';')
 	res = append(res, []byte(msg.Channel)...) // add name of channel
+	res = append(res, ';')
+	res = append(res, []byte(strings.ToUpper(strconv.FormatUint(uint64(msg.ID), 10)))...)
 	res = append(res, ';')
 	res = append(res, []byte(strings.ToUpper(strconv.FormatUint(uint64(len(msg.Data)+4), 16)))...) // plus 4 in message length is add crc calculation
 	res = append(res, []byte(EndHeader)...)
@@ -134,7 +137,12 @@ func (c2c *C2cParser) parseHeader(data []byte) (int, error) {
 	}
 	c2c.head.channel = string(parsed[5])
 	var s uint64
-	if s, err = strconv.ParseUint(string(parsed[6]), 16, 64); err != nil { //размер сообщения
+	if s, err = strconv.ParseUint(string(parsed[6]), 16, 8); err != nil { //id сообщения
+		c2c.head.id = 0
+	} else {
+		c2c.head.id = uint8(s)
+	}
+	if s, err = strconv.ParseUint(string(parsed[7]), 16, 64); err != nil { //размер сообщения
 		return index, errors.New("Icorrect message size, it must be a number")
 	}
 	if s > c2c.maxPackageSize {
@@ -168,6 +176,7 @@ func (c2c *C2cParser) ParseMessage(data []byte) (dto.Message, error) {
 	result.MessageMetaInf = dto.MessageMetaInf{
 		Command: uint16(c2c.head.command),
 		Proto:   uint16(c2c.head.protocolVer),
+		ID:      c2c.head.id,
 		Channel: c2c.head.channel,
 		From:    c2c.head.from,
 		To:      c2c.head.to,
