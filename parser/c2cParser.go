@@ -5,7 +5,6 @@ import (
 	"encoding/binary"
 	"errors"
 	"fmt"
-	"hash/crc32"
 	"io"
 	"strconv"
 	"strings"
@@ -17,7 +16,6 @@ const (
 	headerParamSize       = 8
 	startSymb        byte = '$'
 	versionAttribute byte = 'V'
-	crc32Polynom          = 0x04C11DB7
 )
 const unsupportedSymb = "~!$%^&*)(+=-}{][,;\\/'\""
 
@@ -49,6 +47,21 @@ type C2cParser struct {
 	head           header
 }
 
+func checksumCustom(arr []byte) uint32 {
+	var crc uint32
+	for _, val := range arr {
+		add := uint16(val)
+		if (crc & 0x80_00_00_00) > 0 {
+			add++
+		}
+		crc &= 0x7F_FF_FF_FF
+		crc += uint32(add)
+		crc <<= 1
+		crc++
+	}
+	return crc
+}
+
 //CreateEmptyParser - создает интерфейс парсера с ограничением максимального размера сообщения maxSize
 // Кусок принятого сообщения нужен для создания других видов парсера в будущем
 func CreateEmptyParser(maxSize uint64) IParser {
@@ -59,7 +72,7 @@ func CreateEmptyParser(maxSize uint64) IParser {
 
 func (c2c *C2cParser) addChecksum(arr []byte) []byte {
 	var checksum = make([]byte, 4)
-	binary.BigEndian.PutUint32(checksum, crc32.Checksum(arr, crc32.MakeTable(crc32Polynom)))
+	binary.BigEndian.PutUint32(checksum, checksumCustom(arr))
 	return append(arr, checksum...)
 }
 
@@ -168,9 +181,9 @@ func (c2c *C2cParser) ParseMessage(data []byte) (dto.Message, error) {
 	}()
 	content := make([]byte, c2c.head.contentSize-4) // Delete crc32 sum from end of package
 	copy(content, data[i+c2c.head.headerSize:i+c2c.head.headerSize+c2c.head.contentSize-4])
-	crc := crc32.Checksum(data[i:i+c2c.head.headerSize+c2c.head.contentSize-4], crc32.MakeTable(crc32Polynom))
+	crc := checksumCustom(data[i : i+c2c.head.headerSize+c2c.head.contentSize-4])
 	if crc != binary.BigEndian.Uint32(data[i+c2c.head.headerSize+c2c.head.contentSize-4:]) {
-		// return dto.Message{}, errors.New("Invalid checksum, need crc32 with standart ethernet polynom")
+		return dto.Message{}, errors.New("Invalid checksum")
 	}
 	var result dto.Message
 	result.MessageMetaInf = dto.MessageMetaInf{
