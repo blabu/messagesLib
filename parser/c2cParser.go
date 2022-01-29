@@ -72,7 +72,7 @@ func CreateEmptyParser(maxSize uint64) IParser {
 
 func (c2c *C2cParser) addChecksum(arr []byte) []byte {
 	var checksum = make([]byte, 4)
-	binary.BigEndian.PutUint32(checksum, checksumCustom(arr))
+	binary.LittleEndian.PutUint32(checksum, checksumCustom(arr))
 	return append(arr, checksum...)
 }
 
@@ -182,7 +182,7 @@ func (c2c *C2cParser) ParseMessage(data []byte) (dto.Message, error) {
 	content := make([]byte, c2c.head.contentSize-4) // Delete crc32 sum from end of package
 	copy(content, data[i+c2c.head.headerSize:i+c2c.head.headerSize+c2c.head.contentSize-4])
 	crc := checksumCustom(data[i : i+c2c.head.headerSize+c2c.head.contentSize-4])
-	if crc != binary.BigEndian.Uint32(data[i+c2c.head.headerSize+c2c.head.contentSize-4:]) {
+	if crc != binary.LittleEndian.Uint32(data[i+c2c.head.headerSize+c2c.head.contentSize-4:]) {
 		return dto.Message{}, errors.New("Invalid checksum")
 	}
 	var result dto.Message
