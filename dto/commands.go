@@ -21,6 +21,7 @@ const (
 	PropertiesCOMMAND uint16 = 8
 	ConnectCOMMAND    uint16 = 9
 	PartedCOMMAND     uint16 = 10
+	PatchCOMMAND      uint16 = 11
 )
 
 //CalculateSignature - generate signature
