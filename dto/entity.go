@@ -54,7 +54,7 @@ type Bot struct {
 	HealthCheck string `json:"health" db:"HealthCheck"` // GET request to check health bot with return http.StatusOK if all ok. Return any other close connection destroy bot entity
 }
 
-// Channel is entity tha store information about channel
+// Channel is entity that store information about channel
 type Channel struct {
 	ClientDescriptor
 	More      string `json:"more" db:"More"`
