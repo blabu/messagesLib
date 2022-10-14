@@ -39,6 +39,7 @@ type IMessageHistoryWriter interface {
 	Delete(ctx context.Context, from, to, id string) error             // Удалить сообщения из списков от кого и кому
 }
 
+// IMessageHistory - позволяет работать с метаинформацией сообщения, хранит информацию от кого куда и когда отправлялось сообщение
 type IMessageHistory interface {
 	IMessageHistoryReader
 	IMessageHistoryWriter

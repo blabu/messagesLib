@@ -2,7 +2,9 @@ package dto
 
 import "time"
 
-//MessageContent - Содержимое сообщения безотносительно от того кому и куда оно отправлено. Для исключения дубликатов ключ - это хеш сумма содержимого
+//MessageContent - Содержимое сообщения безотносительно от того кому и куда оно отправлено.
+//Для исключения дубликатов ключ - это хеш сумма содержимого,
+//таким образом, сообщение не дублируется если его пересылать или повторно отправить
 type MessageContent struct {
 	Hash        string    `json:"hash" db:"Hash"`
 	ContentType string    `json:"contentType" db:"ContentType"`
@@ -11,7 +13,8 @@ type MessageContent struct {
 	ModifDate   time.Time `json:"modifDate" db:"ModifDate"`
 }
 
-//MessageMetaInf - история сообщений между пользователями. Хранит мета информацию от кого куда во сколько
+//MessageMetaInf - Хранит мета информацию от кого куда во сколько.
+//История сообщений между пользователями.
 type MessageMetaInf struct {
 	ID          uint8  `json:"-" db:"-"`
 	UID         string `json:"uid" db:"UID"`
