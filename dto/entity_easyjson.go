@@ -63,17 +63,17 @@ func easyjson163c17a9EncodeGithubComBlabuMessagesLibDto(out *jwriter.Writer, in 
 		out.RawString(prefix[1:])
 		out.String(string(in.Name))
 	}
-	{
+	if in.LastPing != 0 {
 		const prefix string = ",\"lastPing\":"
 		out.RawString(prefix)
 		out.Int64(int64(in.LastPing))
 	}
-	{
+	if in.Voltage != 0 {
 		const prefix string = ",\"voltage\":"
 		out.RawString(prefix)
 		out.Uint16(uint16(in.Voltage))
 	}
-	{
+	if in.Signal != 0 {
 		const prefix string = ",\"signal\":"
 		out.RawString(prefix)
 		out.Uint8(uint8(in.Signal))
@@ -159,7 +159,12 @@ func easyjson163c17a9EncodeGithubComBlabuMessagesLibDto1(out *jwriter.Writer, in
 	_ = first
 	{
 		const prefix string = ",\"uid\":"
-		out.RawString(prefix[1:])
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.UID))
 	}
 	{
@@ -167,22 +172,22 @@ func easyjson163c17a9EncodeGithubComBlabuMessagesLibDto1(out *jwriter.Writer, in
 		out.RawString(prefix)
 		out.String(string(in.ContentHash))
 	}
-	{
+	if in.Proto != 0 {
 		const prefix string = ",\"proto\":"
 		out.RawString(prefix)
 		out.Uint16(uint16(in.Proto))
 	}
-	{
+	if in.Command != 0 {
 		const prefix string = ",\"cmd\":"
 		out.RawString(prefix)
 		out.Uint16(uint16(in.Command))
 	}
-	{
+	if in.Channel != "" {
 		const prefix string = ",\"channel\":"
 		out.RawString(prefix)
 		out.String(string(in.Channel))
 	}
-	{
+	if in.Name != "" {
 		const prefix string = ",\"name\":"
 		out.RawString(prefix)
 		out.String(string(in.Name))
@@ -192,17 +197,17 @@ func easyjson163c17a9EncodeGithubComBlabuMessagesLibDto1(out *jwriter.Writer, in
 		out.RawString(prefix)
 		out.Int64(int64(in.AddedTime))
 	}
-	{
+	if in.SendedTime != 0 {
 		const prefix string = ",\"sendedTime\":"
 		out.RawString(prefix)
 		out.Int64(int64(in.SendedTime))
 	}
-	{
+	if in.From != "" {
 		const prefix string = ",\"from\":"
 		out.RawString(prefix)
 		out.String(string(in.From))
 	}
-	{
+	if in.To != "" {
 		const prefix string = ",\"to\":"
 		out.RawString(prefix)
 		out.String(string(in.To))
@@ -295,7 +300,7 @@ func easyjson163c17a9EncodeGithubComBlabuMessagesLibDto2(out *jwriter.Writer, in
 		out.RawString(prefix)
 		out.String(string(in.ContentType))
 	}
-	{
+	if len(in.Data) != 0 {
 		const prefix string = ",\"data\":"
 		out.RawString(prefix)
 		out.Base64Bytes(in.Data)
@@ -305,7 +310,7 @@ func easyjson163c17a9EncodeGithubComBlabuMessagesLibDto2(out *jwriter.Writer, in
 		out.RawString(prefix)
 		out.Raw((in.CreatedDate).MarshalJSON())
 	}
-	{
+	if true {
 		const prefix string = ",\"modifDate\":"
 		out.RawString(prefix)
 		out.Raw((in.ModifDate).MarshalJSON())
@@ -418,7 +423,7 @@ func easyjson163c17a9EncodeGithubComBlabuMessagesLibDto3(out *jwriter.Writer, in
 		out.RawString(prefix)
 		out.String(string(in.ContentType))
 	}
-	{
+	if len(in.Data) != 0 {
 		const prefix string = ",\"data\":"
 		out.RawString(prefix)
 		out.Base64Bytes(in.Data)
@@ -428,7 +433,7 @@ func easyjson163c17a9EncodeGithubComBlabuMessagesLibDto3(out *jwriter.Writer, in
 		out.RawString(prefix)
 		out.Raw((in.CreatedDate).MarshalJSON())
 	}
-	{
+	if true {
 		const prefix string = ",\"modifDate\":"
 		out.RawString(prefix)
 		out.Raw((in.ModifDate).MarshalJSON())
@@ -443,22 +448,22 @@ func easyjson163c17a9EncodeGithubComBlabuMessagesLibDto3(out *jwriter.Writer, in
 		out.RawString(prefix)
 		out.String(string(in.ContentHash))
 	}
-	{
+	if in.Proto != 0 {
 		const prefix string = ",\"proto\":"
 		out.RawString(prefix)
 		out.Uint16(uint16(in.Proto))
 	}
-	{
+	if in.Command != 0 {
 		const prefix string = ",\"cmd\":"
 		out.RawString(prefix)
 		out.Uint16(uint16(in.Command))
 	}
-	{
+	if in.Channel != "" {
 		const prefix string = ",\"channel\":"
 		out.RawString(prefix)
 		out.String(string(in.Channel))
 	}
-	{
+	if in.Name != "" {
 		const prefix string = ",\"name\":"
 		out.RawString(prefix)
 		out.String(string(in.Name))
@@ -468,17 +473,17 @@ func easyjson163c17a9EncodeGithubComBlabuMessagesLibDto3(out *jwriter.Writer, in
 		out.RawString(prefix)
 		out.Int64(int64(in.AddedTime))
 	}
-	{
+	if in.SendedTime != 0 {
 		const prefix string = ",\"sendedTime\":"
 		out.RawString(prefix)
 		out.Int64(int64(in.SendedTime))
 	}
-	{
+	if in.From != "" {
 		const prefix string = ",\"from\":"
 		out.RawString(prefix)
 		out.String(string(in.From))
 	}
-	{
+	if in.To != "" {
 		const prefix string = ",\"to\":"
 		out.RawString(prefix)
 		out.String(string(in.To))
@@ -561,22 +566,22 @@ func easyjson163c17a9EncodeGithubComBlabuMessagesLibDto4(out *jwriter.Writer, in
 		out.RawString(prefix[1:])
 		out.String(string(in.Name))
 	}
-	{
+	if in.Token != "" {
 		const prefix string = ",\"token\":"
 		out.RawString(prefix)
 		out.String(string(in.Token))
 	}
-	{
+	if in.ImageURL != "" {
 		const prefix string = ",\"image\":"
 		out.RawString(prefix)
 		out.String(string(in.ImageURL))
 	}
-	{
+	if true {
 		const prefix string = ",\"created\":"
 		out.RawString(prefix)
 		out.Raw((in.CreatedDate).MarshalJSON())
 	}
-	{
+	if true {
 		const prefix string = ",\"activity\":"
 		out.RawString(prefix)
 		out.Raw((in.LastDate).MarshalJSON())
@@ -660,42 +665,58 @@ func easyjson163c17a9EncodeGithubComBlabuMessagesLibDto5(out *jwriter.Writer, in
 	out.RawByte('{')
 	first := true
 	_ = first
-	{
+	if in.More != "" {
 		const prefix string = ",\"more\":"
+		first = false
 		out.RawString(prefix[1:])
 		out.String(string(in.More))
 	}
-	{
+	if in.About != "" {
 		const prefix string = ",\"about\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.About))
 	}
-	{
+	if in.CreatedBy != "" {
 		const prefix string = ",\"who\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.CreatedBy))
 	}
 	{
 		const prefix string = ",\"name\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.Name))
 	}
-	{
+	if in.Token != "" {
 		const prefix string = ",\"token\":"
 		out.RawString(prefix)
 		out.String(string(in.Token))
 	}
-	{
+	if in.ImageURL != "" {
 		const prefix string = ",\"image\":"
 		out.RawString(prefix)
 		out.String(string(in.ImageURL))
 	}
-	{
+	if true {
 		const prefix string = ",\"created\":"
 		out.RawString(prefix)
 		out.Raw((in.CreatedDate).MarshalJSON())
 	}
-	{
+	if true {
 		const prefix string = ",\"activity\":"
 		out.RawString(prefix)
 		out.Raw((in.LastDate).MarshalJSON())
@@ -781,47 +802,68 @@ func easyjson163c17a9EncodeGithubComBlabuMessagesLibDto6(out *jwriter.Writer, in
 	out.RawByte('{')
 	first := true
 	_ = first
-	{
+	if in.CreatedBy != "" {
 		const prefix string = ",\"who\":"
+		first = false
 		out.RawString(prefix[1:])
 		out.String(string(in.CreatedBy))
 	}
-	{
+	if in.About != "" {
 		const prefix string = ",\"about\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.About))
 	}
-	{
+	if in.Endpoint != "" {
 		const prefix string = ",\"endpoint\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.Endpoint))
 	}
-	{
+	if in.HealthCheck != "" {
 		const prefix string = ",\"health\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.HealthCheck))
 	}
 	{
 		const prefix string = ",\"name\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.Name))
 	}
-	{
+	if in.Token != "" {
 		const prefix string = ",\"token\":"
 		out.RawString(prefix)
 		out.String(string(in.Token))
 	}
-	{
+	if in.ImageURL != "" {
 		const prefix string = ",\"image\":"
 		out.RawString(prefix)
 		out.String(string(in.ImageURL))
 	}
-	{
+	if true {
 		const prefix string = ",\"created\":"
 		out.RawString(prefix)
 		out.Raw((in.CreatedDate).MarshalJSON())
 	}
-	{
+	if true {
 		const prefix string = ",\"activity\":"
 		out.RawString(prefix)
 		out.Raw((in.LastDate).MarshalJSON())
